@@ -1,0 +1,27 @@
+Example project to run Java standalone tool (with JNI) on android without creating an apk.
+
+Requirements:
+
+- Android SDK 
+    - platform-tools (adb)
+    - build-tools 30.0.2
+    - platforms android-30
+- JDK >= 11
+- NDK r22 / r23 
+
+Building:
+
+    ANDROID_NDK_STANDALONE=$ANDROID_NDK_HOME/toolchains/llvm/prebuilt/darwin-x86_64 \
+        make all
+
+Run:
+
+    adb shell mkdir /data/local/tmp/helloworld
+    adb push --sync build/helloworld.jar  build/libhello.so  build/helloworld /data/local/tmp/helloworld/
+    adb shell chmod a+x /data/local/tmp/helloworld/helloworld
+
+    adb shell /data/local/tmp/helloworld/helloworld
+
+Refs:
+
+- https://raccoon.onyxbits.de/blog/run-java-app-android/
